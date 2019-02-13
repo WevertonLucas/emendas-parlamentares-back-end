@@ -10,7 +10,7 @@ class MunicipioDAO {
     
     //Lista os Municípios de uma Uf.
     getMunicipioByUf(uf, callback) {
-        this._connection.query(`SELECT nome_municipio FROM municipio WHERE uf = '${uf}'`, callback);
+        this._connection.query(`SELECT cod_ibge, nome_municipio FROM municipio WHERE uf = '${uf}'`, callback);
     }
     
 }
