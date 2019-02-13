@@ -27,5 +27,38 @@ module.exports = function(app){
         connection.end();
     }
 
+    //Salva uma nova Emenda.
+    api.postEmenda = (req, res) => {
+        const emenda = req.body;
+        let { projeto } = req.body;
+        
+        delete emenda.uf;
+        delete emenda.projeto;
+        
+    	const knex = app.conexao.conexaoKnex();
+
+        knex('emenda').insert(emenda)
+            .then(resultadoEmenda => {
+                let emenda_projeto = [];
+
+                if(Array.isArray(projeto)){
+                    for(let i = 0; i<projeto.length; i++){
+                        emenda_projeto[i] = { cod_emenda: resultadoEmenda[0], cod_projeto: projeto[i] };
+                    }
+                }
+
+                return knex('emenda_projeto').insert(emenda_projeto)
+                    .then(resultadoEmendaProjeto => {
+                        knex.destroy();
+                        res.status(200).json(resultadoEmenda[0]);
+                    })
+            })
+            .catch(erro => {
+                console.log(erro);
+                knex.destroy();
+                res.status(500).send('Erro ao cadastrar a emenda.');
+            });
+    };
+
     return api;
 }
