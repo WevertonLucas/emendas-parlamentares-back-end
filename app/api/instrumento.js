@@ -7,7 +7,7 @@ module.exports = function(app) {
         const instrumentoDAO = new app.infra.InstrumentoDAO(connection);
 
         instrumentoDAO.getInstrumento((erro, resultado) => {
-            erro ? (console.log(erro), res.status(500).send('Erro ao obter os Instrumentos.')) : res.status(200).json(resultado);
+            erro ? (console.log(erro), res.status(500).send('Erro ao obter os instrumentos.')) : res.status(200).json(resultado);
         });
 
         connection.end();

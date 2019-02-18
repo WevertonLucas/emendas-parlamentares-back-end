@@ -21,7 +21,15 @@ module.exports = function(app){
         const emendaDAO = new app.infra.EmendaDAO(connection);
         
         emendaDAO.getEmendaById(cod_emenda, (erro, resultado) => {
-            erro ? (console.log(erro), res.status(500).send(`Erro ao obter a emenda com ID: ${cod_emenda}.`)) : res.status(200).json(resultado[0]);
+            if(erro){
+                console.log(erro);
+                res.status(500).send(`Erro ao obter a emenda com ID: ${cod_emenda}.`);
+            } else {
+                if(resultado[0].cod_projeto)
+                resultado[0].cod_projeto = resultado[0].cod_projeto.split(",")
+
+                res.status(200).json(resultado[0])
+            }
         });
 
         connection.end();
@@ -29,7 +37,7 @@ module.exports = function(app){
 
     //Salva uma nova Emenda.
     api.postEmenda = (req, res) => {
-        const emenda = req.body;
+        let emenda = req.body;
         let { projeto } = req.body;
         
         delete emenda.uf;
@@ -50,7 +58,7 @@ module.exports = function(app){
                 return knex('emenda_projeto').insert(emenda_projeto)
                     .then(resultadoEmendaProjeto => {
                         knex.destroy();
-                        res.status(200).json(resultadoEmenda[0]);
+                        res.status(201).json(resultadoEmenda[0]);
                     })
             })
             .catch(erro => {
@@ -59,6 +67,44 @@ module.exports = function(app){
                 res.status(500).send('Erro ao cadastrar a emenda.');
             });
     };
+
+    api.putEmenda = (req, res) => {
+        const { cod_emenda } = req.params;
+        let emenda = req.body;
+        let { projeto } = req.body;
+
+        delete emenda.uf;
+        delete emenda.projeto;
+        
+        const knex = app.conexao.conexaoKnex();
+
+        knex('emenda').update(emenda).where('cod_emenda', cod_emenda)
+            .then(resultadoUpdate => {
+                knex('emenda_projeto').where('cod_emenda', cod_emenda).delete()
+                    .then(resultadoDelete => {
+                        let emenda_projeto = [];
+
+                        if(Array.isArray(projeto)){
+                            for(let i = 0; i<projeto.length; i++){
+                                emenda_projeto[i] = { cod_emenda, cod_projeto: projeto[i] };
+                            }
+                        }
+
+                        return knex('emenda_projeto').insert(emenda_projeto)
+                            .then(resultadoEmendaProjeto => {
+                                knex.destroy();
+                                res.status(200).end();
+                            })
+                    })
+
+            })
+            .catch(erro => {
+                console.log(erro);
+                knex.destroy();
+                res.status(500).send('Erro ao atualizar a emenda.');
+            });        
+    }
+
 
     return api;
 }
