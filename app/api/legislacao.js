@@ -19,7 +19,7 @@ module.exports = function(app){
         const legislacaoDAO = new app.infra.LegislacaoDAO(connection);
 
         legislacaoDAO.getLegislacaoById(ano, (erro, resultado) => {
-            erro ? (console.log(erro), res.status(500).send(`Erro ao obter legislação com ID: ${ano}.`)) : res.status(200).json(resultado[0]);
+            erro ? (console.log(erro), res.status(500).send(`Erro ao obter a legislação com ID: ${ano}.`)) : res.status(200).json(resultado[0]);
         });
 
         connection.end();

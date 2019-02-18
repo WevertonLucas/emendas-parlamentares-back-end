@@ -30,7 +30,8 @@ module.exports = function(app){
         .post(emenda.postEmenda);
 
     app.route('/emendas/:cod_emenda')
-        .get(emenda.getEmendaById);
+        .get(emenda.getEmendaById)
+        .put(emenda.putEmenda);
 
 /* ===== Rotas de Fonte ===== */
     app.route('/fontes')

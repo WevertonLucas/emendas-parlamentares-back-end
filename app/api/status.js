@@ -7,7 +7,7 @@ module.exports = function(app) {
         const statusDAO = new app.infra.StatusDAO(connection);
 
         statusDAO.getStatus((erro, resultado) => {
-            erro ? (console.log(erro), res.status(500).send('Erro ao obter os Status.')) : res.status(200).json(resultado);
+            erro ? (console.log(erro), res.status(500).send('Erro ao obter os status.')) : res.status(200).json(resultado);
         });
 
         connection.end();

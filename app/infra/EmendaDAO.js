@@ -9,7 +9,8 @@ class EmendaDAO {
             `SELECT emenda.cod_emenda, emenda.ano, emenda.num_emenda, emenda.beneficiario, emenda.valor_emenda, autor.*, status.descricao AS status
             FROM emenda
             INNER JOIN autor ON emenda.cod_autor = autor.cod_autor
-            INNER JOIN status ON emenda.cod_status = status.cod_status`, callback);
+            LEFT JOIN status ON emenda.cod_status = status.cod_status
+            ORDER BY emenda.ano DESC`, callback);
     }
 
     //Lista uma Emenda com base no ID (cod_emenda).
@@ -18,7 +19,7 @@ class EmendaDAO {
             `SELECT *, legislacao.descricao AS descricaoLegislacao, fonte.descricao AS fonte, gnd.descricao AS gnd, modalidade.descricao AS modalidade,
             programa_governo.descricao AS programa_governo, acao_orcamentaria.descricao AS acao_orcamentaria,
             status.descricao AS status, instrumento.descricao AS instrumento, CASE WHEN emenda.impedimento = "1" THEN "Sim" WHEN emenda.impedimento = "0" THEN "Não" END AS "impedimento",
-            group_concat(projeto.descricao) AS projeto
+            group_concat(projeto.descricao) AS projeto, group_concat(projeto.cod_projeto) AS cod_projeto
             FROM emenda
             INNER JOIN legislacao ON emenda.ano = legislacao.ano
             LEFT JOIN municipio ON emenda.cod_ibge = municipio.cod_ibge

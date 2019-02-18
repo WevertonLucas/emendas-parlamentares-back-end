@@ -7,7 +7,7 @@ module.exports = function(app) {
         const acaoOrcamentariaDAO = new app.infra.AcaoOrcamentariaDAO(connection);
 
         acaoOrcamentariaDAO.getAcaoOrcamentaria((erro, resultado) => {
-            erro ? (console.log(erro), res.status(500).send('Erro ao obter as Ações Orçamentárias.')) : res.status(200).json(resultado);
+            erro ? (console.log(erro), res.status(500).send('Erro ao obter as ações orçamentárias.')) : res.status(200).json(resultado);
         });
 
         connection.end();
