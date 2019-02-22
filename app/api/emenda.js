@@ -3,12 +3,20 @@ module.exports = function(app){
 
     //Lista todas as Emendas.
     api.getEmenda = (req, res) => {
+        let { num_emenda } = req.query;
+
         const connection = app.conexao.conexao();
         const emendaDAO = new app.infra.EmendaDAO(connection);
 
-        emendaDAO.getEmenda((erro, resultado) => {
-            erro ? (console.log(erro), res.status(500).send('Erro ao obter as emendas.')) : res.status(200).json(resultado);
-        });
+        if(num_emenda){
+            emendaDAO.getEmendaByNumEmenda(num_emenda, (erro, resultado) => {
+                erro ? (console.log(erro), res.status(500).send('Erro ao obter as emendas.')) : res.status(200).json(resultado);
+            });
+        } else {
+            emendaDAO.getEmenda((erro, resultado) => {
+                erro ? (console.log(erro), res.status(500).send('Erro ao obter as emendas.')) : res.status(200).json(resultado);
+            });
+        }
 
         connection.end();
     }
