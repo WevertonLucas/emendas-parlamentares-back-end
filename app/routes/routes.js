@@ -47,10 +47,13 @@ module.exports = function(app){
 
 /* ===== Rotas de Legislação ===== */
     app.route('/legislacoes')
-        .get(legislacao.getLegislacao);
+        .get(legislacao.getLegislacao)
+        .post(legislacao.postLegislacao);
 
     app.route('/legislacoes/:ano')
-        .get(legislacao.getLegislacaoById);
+        .get(legislacao.getLegislacaoById)
+        .put(legislacao.putLegislacao)
+        .delete(legislacao.deleteLegislacao);
 
 /* ===== Rotas de Modalidade ===== */
     app.route('/modalidades')
