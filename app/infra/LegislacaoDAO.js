@@ -5,7 +5,7 @@ class LegislacaoDAO {
 
     //Lista todas as Legislações.
     getLegislacao(callback) {
-        this._connection.query(`SELECT * FROM legislacao`, callback);
+        this._connection.query(`SELECT * FROM legislacao ORDER BY ano DESC`, callback);
     }
 
     //Lista uma Legislações com base no ID (ano).

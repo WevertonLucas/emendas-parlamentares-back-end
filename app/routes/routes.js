@@ -19,10 +19,13 @@ module.exports = function(app){
 
 /* ===== Rotas de Autor ===== */
     app.route('/autores')
-        .get(autor.getAutor);
+        .get(autor.getAutor)
+        .post(autor.postAutor);
 
     app.route('/autores/:cod_autor')
-        .get(autor.getAutorById);
+        .get(autor.getAutorById)
+        .put(autor.putAutor)
+        .delete(autor.deleteAutor);
 
 /* ===== Rotas de Emenda ===== */
     app.route('/emendas')
