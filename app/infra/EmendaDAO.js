@@ -10,7 +10,7 @@ class EmendaDAO {
             FROM emenda
             INNER JOIN autor ON emenda.cod_autor = autor.cod_autor
             LEFT JOIN status ON emenda.cod_status = status.cod_status
-            ORDER BY num_emenda`, callback);
+            ORDER BY emenda.ano DESC`, callback);
     }
 
     //Lista todas as Emendas.
@@ -21,7 +21,7 @@ class EmendaDAO {
             INNER JOIN autor ON emenda.cod_autor = autor.cod_autor
             LEFT JOIN status ON emenda.cod_status = status.cod_status
             WHERE emenda.num_emenda LIKE '%${num_emenda}%'
-            ORDER BY num_emenda`, callback);
+            ORDER BY emenda.ano DESC`, callback);
     }
 
     //Lista uma Emenda com base no ID (cod_emenda).
