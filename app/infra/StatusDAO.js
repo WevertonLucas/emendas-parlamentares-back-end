@@ -1,3 +1,4 @@
+//Classe de acesso a dados para Status.
 class StatusDAO {
     constructor(connection) {
         this._connection = connection;

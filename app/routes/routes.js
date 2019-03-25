@@ -1,5 +1,6 @@
 module.exports = function(app){
 
+    //Chamada dos objetos com os callbacks das rotas.
     let acaoOrcamentaria = app.api.acaoOrcamentaria;
     let autor = app.api.autor;
     let emenda = app.api.emenda;
@@ -62,7 +63,7 @@ module.exports = function(app){
     app.route('/modalidades')
         .get(modalidade.getModalidade);
 
-/* ===== Rotas de Modalidade ===== */
+/* ===== Rotas de Municípios ===== */
     app.route('/ufs')
         .get(municipio.getUf);
 

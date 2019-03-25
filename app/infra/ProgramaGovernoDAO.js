@@ -1,3 +1,4 @@
+//Classe de acesso a dados para Programas de Governo.
 class ProgramaGovernoDAO {
     constructor(connection) {
         this._connection = connection;

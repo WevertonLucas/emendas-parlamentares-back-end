@@ -1,3 +1,4 @@
+//Classe de acesso a dados para Ação Orçamentária.
 class AcaoOrcamentariaDAO {
     constructor(connection) {
         this._connection = connection;

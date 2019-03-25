@@ -1,3 +1,4 @@
+//Classe de acesso a dados para Emenda.
 class EmendaDAO {
     constructor(connection) {
         this._connection = connection;
@@ -10,10 +11,10 @@ class EmendaDAO {
             FROM emenda
             INNER JOIN autor ON emenda.cod_autor = autor.cod_autor
             LEFT JOIN status ON emenda.cod_status = status.cod_status
-            ORDER BY emenda.ano DESC`, callback);
+            ORDER BY num_emenda`, callback);
     }
 
-    //Lista todas as Emendas.
+    //Lista todas as Emendas com base no Número da emenda (num_emenda) que é passado como parâmetro.
     getEmendaByNumEmenda(num_emenda, callback) {
         this._connection.query(
             `SELECT emenda.cod_emenda, emenda.ano, emenda.num_emenda, emenda.beneficiario, emenda.valor_emenda, autor.*, status.descricao AS status
@@ -21,10 +22,10 @@ class EmendaDAO {
             INNER JOIN autor ON emenda.cod_autor = autor.cod_autor
             LEFT JOIN status ON emenda.cod_status = status.cod_status
             WHERE emenda.num_emenda LIKE '%${num_emenda}%'
-            ORDER BY emenda.ano DESC`, callback);
+            ORDER BY num_emenda`, callback);
     }
 
-    //Lista uma Emenda com base no ID (cod_emenda).
+    //Lista uma Emenda com base no ID (cod_emenda) que é passado como parâmetro.
     getEmendaById(cod_emenda, callback) {
         this._connection.query(
             `SELECT *, legislacao.descricao AS descricaoLegislacao, fonte.descricao AS fonte, gnd.descricao AS gnd, modalidade.descricao AS modalidade,
@@ -42,8 +43,8 @@ class EmendaDAO {
             INNER JOIN acao_orcamentaria ON emenda.cod_acao_orcamentaria = acao_orcamentaria.cod_acao_orcamentaria
             LEFT JOIN status ON emenda.cod_status = status.cod_status
             LEFT JOIN instrumento ON emenda.cod_instrumento = instrumento.cod_instrumento
-            INNER JOIN emenda_projeto ON emenda.cod_emenda = emenda_projeto.cod_emenda
-            INNER JOIN projeto ON emenda_projeto.cod_projeto = projeto.cod_projeto
+            LEFT JOIN emenda_projeto ON emenda.cod_emenda = emenda_projeto.cod_emenda
+            LEFT JOIN projeto ON emenda_projeto.cod_projeto = projeto.cod_projeto
             WHERE emenda.cod_emenda = ${cod_emenda}`, callback);
         }
 }
