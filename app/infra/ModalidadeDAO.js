@@ -1,3 +1,4 @@
+//Classe de acesso a dados para Modalidade.
 class ModalidadeDAO {
     constructor(connection) {
         this._connection = connection;

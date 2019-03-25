@@ -1,3 +1,4 @@
+//Classe de acesso a dados para Instrumento.
 class InstrumentoDAO {
     constructor(connection) {
         this._connection = connection;

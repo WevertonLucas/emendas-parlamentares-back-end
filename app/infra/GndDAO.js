@@ -1,3 +1,4 @@
+//Classe de acesso a dados para Gnd.
 class GndDAO {
     constructor(connection) {
         this._connection = connection;

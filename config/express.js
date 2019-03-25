@@ -1,3 +1,4 @@
+//Carrega os módulos necessários para o servidor.
 const app = require('express')()
     ,consign = require('consign')
     ,bodyParser = require('body-parser')
@@ -12,9 +13,11 @@ app.use(function(req, res, next) {
     next();
 });
 
+//Configuração do BodyParser
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+//Carregamento dos módulos do projeto pelo Consign
 consign({cwd : 'app'})
     .include('conexao')
     .then('infra')

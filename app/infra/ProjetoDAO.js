@@ -1,3 +1,4 @@
+//Classe de acesso a dados para Projeto.
 class ProjetoDAO {
     constructor(connection) {
         this._connection = connection;

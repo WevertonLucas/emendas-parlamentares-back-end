@@ -1,3 +1,4 @@
+//Classe de acesso a dados para Fonte.
 class FonteDAO {
     constructor(connection) {
         this._connection = connection;
